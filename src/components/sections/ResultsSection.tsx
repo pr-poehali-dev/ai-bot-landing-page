@@ -69,7 +69,7 @@ export default function ResultsSection() {
               </div>
               <div className="mt-4 p-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg text-center">
                 <p className="text-sm font-semibold mb-1">РЕЗУЛЬТАТ</p>
-                <p className="text-3xl font-bold">+75% конверсии</p>
+                <p className="text-3xl font-bold">рост конверсии на 157%</p>
                 <p className="text-sm mt-1">В 2.5 раза больше полученных контактов!</p>
               </div>
             </Card>
