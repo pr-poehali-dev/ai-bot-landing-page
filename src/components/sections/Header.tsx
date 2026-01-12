@@ -6,11 +6,11 @@ export default function Header() {
     <header className="py-4 bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <a href="https://khurma.pro" className="flex items-center">
+          <a href="https://khurma.pro" target="_blank" rel="noopener noreferrer" className="flex items-center">
             <img 
-              src="https://cdn.poehali.dev/files/Основной знак на белом фоне.png" 
-              alt="Khurma Marketing" 
-              className="h-14 md:h-20 hover:opacity-80 transition-opacity"
+              src="https://cdn.poehali.dev/files/Слой_1.png" 
+              alt="Khurma" 
+              className="h-10 md:h-14 hover:opacity-80 transition-opacity"
             />
           </a>
           <div className="flex items-center gap-4">
