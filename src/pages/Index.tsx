@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
+import ContactForm from '@/components/ContactForm';
 
 export default function Index() {
   const [chatsPerMonth, setChatsPerMonth] = useState(300);
@@ -301,18 +302,10 @@ export default function Index() {
               Готовы увеличить прибыль?
             </h2>
             <p className="text-xl mb-8 text-blue-100">
-              Покажем, как это работает за 15 минут!
+              Оставьте заявку и я свяжусь с вами в течение 15 минут!
             </p>
             
-            <Button 
-              size="lg" 
-              className="text-xl px-12 py-8 bg-white text-primary hover:bg-blue-50 shadow-2xl hover:shadow-3xl transition-all font-bold"
-              asChild
-            >
-              <a href="https://vk.ru/khurma.marketing" target="_blank" rel="noopener noreferrer">
-                НАПИСАТЬ В VK
-              </a>
-            </Button>
+            <ContactForm />
 
             <div className="mt-12 grid md:grid-cols-2 gap-6">
               <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
