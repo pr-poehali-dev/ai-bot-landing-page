@@ -1,27 +1,10 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
-import { useToast } from '@/hooks/use-toast';
 
 export default function Index() {
-  const [formData, setFormData] = useState({
-    name: '',
-    contact: '',
-    email: ''
-  });
   const [chatsPerMonth, setChatsPerMonth] = useState(300);
-  const { toast } = useToast();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Заявка отправлена!",
-      description: "Мы свяжемся с вами в ближайшее время для демонстрации."
-    });
-    setFormData({ name: '', contact: '', email: '' });
-  };
 
   const calculateProfit = () => {
     const currentLeads = Math.round(chatsPerMonth * 0.14);
@@ -34,9 +17,7 @@ export default function Index() {
 
   const stats = calculateProfit();
 
-  const scrollToForm = () => {
-    document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -57,9 +38,11 @@ export default function Index() {
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
-                onClick={scrollToForm}
+                asChild
               >
-                ХОЧУ БЕСПЛАТНОЕ ДЕМО
+                <a href="https://vk.ru/khurma.marketing" target="_blank" rel="noopener noreferrer">
+                  ХОЧУ БЕСПЛАТНОЕ ДЕМО
+                </a>
               </Button>
               <Button 
                 size="lg" 
@@ -311,9 +294,9 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="form-section" className="py-20 bg-gradient-to-br from-primary to-blue-600 text-white">
+      <section className="py-20 bg-gradient-to-br from-primary to-blue-600 text-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center">
             <h2 className="font-heading text-3xl md:text-5xl font-bold mb-4">
               Готовы увеличить прибыль?
             </h2>
@@ -321,55 +304,30 @@ export default function Index() {
               Покажем, как это работает за 15 минут!
             </p>
             
-            <Card className="p-8 bg-white text-foreground">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    placeholder="Ваше имя"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                    className="text-lg py-6"
-                  />
-                </div>
-                <div>
-                  <Input
-                    placeholder="Телефон / WhatsApp"
-                    value={formData.contact}
-                    onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                    required
-                    className="text-lg py-6"
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                    className="text-lg py-6"
-                  />
-                </div>
-                <Button type="submit" size="lg" className="w-full text-lg py-6">
-                  ОТПРАВИТЬ ЗАЯВКУ НА ДЕМО
-                </Button>
-              </form>
-              
-              <div className="mt-8 space-y-4">
-                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-sm font-semibold text-yellow-800">
-                    <Icon name="Gift" className="inline mr-2" size={16} />
-                    P.S. Первым 3 клиентам — скидка 20% на внедрение!
-                  </p>
-                </div>
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-sm font-medium text-blue-800">
-                    💡 Интрига: В примерах — только ночные часы... а если 24/7?
-                  </p>
-                </div>
+            <Button 
+              size="lg" 
+              className="text-xl px-12 py-8 bg-white text-primary hover:bg-blue-50 shadow-2xl hover:shadow-3xl transition-all font-bold"
+              asChild
+            >
+              <a href="https://vk.ru/khurma.marketing" target="_blank" rel="noopener noreferrer">
+                НАПИСАТЬ В VK
+              </a>
+            </Button>
+
+            <div className="mt-12 grid md:grid-cols-2 gap-6">
+              <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                <Icon name="Gift" className="mx-auto mb-3 text-yellow-300" size={32} />
+                <p className="font-semibold text-lg">
+                  Первым 3 клиентам — скидка 20% на внедрение!
+                </p>
               </div>
-            </Card>
+              <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                <Icon name="Zap" className="mx-auto mb-3 text-yellow-300" size={32} />
+                <p className="font-semibold text-lg">
+                  💡 Интрига: В примерах — только ночные часы... а если 24/7?
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
