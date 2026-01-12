@@ -49,7 +49,7 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
                 <div className="bg-red-50 p-6 rounded-lg border border-red-200">
                   <p className="text-sm text-muted-foreground mb-2">БЕЗ AI-бота</p>
                   <p className="text-4xl font-bold text-red-600">{stats.currentLeads}</p>
-                  <p className="text-sm text-muted-foreground mt-1">заявок на тест-драйв (14%)</p>
+                  <p className="text-sm text-muted-foreground mt-1">номеров телефонов получено (14%)</p>
                 </div>
               </div>
 
@@ -57,7 +57,7 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
                 <div className="bg-green-50 p-6 rounded-lg border border-green-200">
                   <p className="text-sm text-muted-foreground mb-2">С AI-ботом</p>
                   <p className="text-4xl font-bold text-green-600">{stats.newLeads}</p>
-                  <p className="text-sm text-muted-foreground mt-1">заявок на тест-драйв (25%)</p>
+                  <p className="text-sm text-muted-foreground mt-1">номеров телефонов получено (25%)</p>
                 </div>
               </div>
             </div>

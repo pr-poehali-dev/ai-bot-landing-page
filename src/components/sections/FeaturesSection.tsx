@@ -21,7 +21,7 @@ export default function FeaturesSection() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 { icon: 'Car', title: 'Консультирует по авто', desc: 'Рассказывает о комплектациях, ценах, акциях и трейд-ин' },
-                { icon: 'Calendar', title: 'Записывает на тест-драйв', desc: 'Собирает контакты и бронирует удобное время' },
+                { icon: 'Phone', title: 'Собирает номера телефонов', desc: 'Получает контакты клиентов для дальнейшей связи' },
                 { icon: 'MessageSquare', title: 'Отвечает за 10 секунд', desc: 'Клиент не ждет — получает ответ мгновенно, даже ночью' },
                 { icon: 'TrendingUp', title: 'Увеличивает продажи на 157%', desc: 'Реальная статистика конверсии наших клиентов' }
               ].map((item, index) => (

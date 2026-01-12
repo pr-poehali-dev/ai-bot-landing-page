@@ -16,7 +16,7 @@ export default function HeroSection() {
               AI-бот для автосалонов — продает машины 24/7
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-3xl mx-auto">
-              Консультирует клиентов по авто, отвечает на вопросы о комплектациях и ценах. Записывает на тест-драйв, пока менеджеры спят.
+              Консультирует клиентов по авто, отвечает на вопросы о комплектациях и ценах. Получает номера телефонов, пока менеджеры спят.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button 
