@@ -24,33 +24,33 @@ export default function Index() {
     <div className="min-h-screen bg-white">
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white py-20 md:py-32">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Icon name="Zap" size={16} />
-              <span>Ответ за 10 секунд 24/7</span>
-            </div>
-            <h1 className="font-heading text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-              AI-бот 24/7 — ваш отдел продаж, который не спит
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Превращаем чаты в деньги. Отвечает за 10 секунд. Работает, пока вы отдыхаете.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all animate-pulse hover:animate-none"
-                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                ХОЧУ БЕСПЛАТНОЕ ДЕМО
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="text-lg px-8 py-6"
-                onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Рассчитать прибыль
-              </Button>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-center md:text-left animate-fade-in">
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                  <Icon name="Zap" size={16} />
+                  <span>Ответ за 10 секунд 24/7</span>
+                </div>
+                <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                  AI-бот 24/7 — ваш отдел продаж, который не спит
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground mb-8">
+                  Превращаем чаты в деньги. Отвечает за 10 секунд. Работает, пока вы отдыхаете.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="text-lg px-8 py-6"
+                    onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Рассчитать прибыль
+                  </Button>
+                </div>
+              </div>
+              <div className="animate-scale-in">
+                <ContactForm />
+              </div>
             </div>
           </div>
         </div>
@@ -306,7 +306,10 @@ export default function Index() {
             <ContactForm />
 
             <div className="mt-12 grid md:grid-cols-2 gap-6">
-              <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+              <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 relative overflow-hidden">
+                <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+                  Осталось 2 места
+                </div>
                 <Icon name="Gift" className="mx-auto mb-3 text-yellow-300" size={32} />
                 <p className="font-semibold text-lg">
                   Первым 3 клиентам — скидка 20% на внедрение!
