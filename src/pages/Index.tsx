@@ -39,11 +39,9 @@ export default function Index() {
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all"
-                asChild
+                onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <a href="https://vk.ru/khurma.marketing" target="_blank" rel="noopener noreferrer">
-                  ХОЧУ БЕСПЛАТНОЕ ДЕМО
-                </a>
+                ХОЧУ БЕСПЛАТНОЕ ДЕМО
               </Button>
               <Button 
                 size="lg" 
@@ -295,7 +293,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-primary to-blue-600 text-white">
+      <section id="contact-form" className="py-20 bg-gradient-to-br from-primary to-blue-600 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="font-heading text-3xl md:text-5xl font-bold mb-4">
