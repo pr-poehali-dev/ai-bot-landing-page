@@ -1,7 +1,7 @@
 {
   "tests": [
     {
-      "name": "Test chat message",
+      "name": "Test chat message from site",
       "method": "POST",
       "body": {
         "message": "Здравствуйте",
@@ -12,6 +12,38 @@
       "expectedStatus": 200,
       "expectedBody": {
         "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test Suvvy webhook test_request",
+      "method": "POST",
+      "body": {
+        "event_type": "test_request"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "status": "ok"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test Suvvy webhook new_messages",
+      "method": "POST",
+      "body": {
+        "event_type": "new_messages",
+        "chat_id": "test-chat-123",
+        "new_messages": [
+          {
+            "type": "text",
+            "message_sender": "ai",
+            "text": "Привет! Как я могу помочь?"
+          }
+        ]
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "status": "ok"
       },
       "bodyMatcher": "partial"
     }

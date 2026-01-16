@@ -4,7 +4,7 @@ import urllib.request
 import hashlib
 
 def handler(event: dict, context) -> dict:
-    '''API для отправки сообщений в Suvvy через webhook'''
+    '''Двусторонняя интеграция с Suvvy: отправка и приём сообщений'''
     method = event.get('httpMethod', 'POST')
 
     if method == 'OPTIONS':
@@ -13,7 +13,7 @@ def handler(event: dict, context) -> dict:
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type'
+                'Access-Control-Allow-Headers': 'Content-Type, Authorization'
             },
             'body': ''
         }
@@ -30,6 +30,15 @@ def handler(event: dict, context) -> dict:
 
     # Получаем данные
     body = json.loads(event.get('body', '{}'))
+    
+    # Определяем направление: от сайта или от Suvvy (webhook)
+    event_type = body.get('event_type', '')
+    
+    # Если это webhook от Suvvy (входящие ответы от бота)
+    if event_type:
+        return handle_suvvy_webhook(body, event)
+    
+    # Иначе это запрос от сайта (отправка сообщения в Suvvy)
     user_message = body.get('message', '')
     user_name = body.get('name', 'Гость')
     user_phone = body.get('phone', '')
@@ -135,3 +144,53 @@ def handler(event: dict, context) -> dict:
                 'session_id': session_id
             })
         }
+
+def handle_suvvy_webhook(body: dict, event: dict) -> dict:
+    '''Обработка входящих сообщений от Suvvy (ответы бота)'''
+    event_type = body.get('event_type', '')
+    
+    # Тестовый запрос от Suvvy
+    if event_type == 'test_request':
+        print('Suvvy webhook test received')
+        return {
+            'statusCode': 200,
+            'headers': {'Content-Type': 'application/json'},
+            'body': json.dumps({'status': 'ok', 'message': 'Webhook works!'})
+        }
+    
+    # Игнорируем всё кроме новых сообщений
+    if event_type != 'new_messages':
+        return {
+            'statusCode': 200,
+            'headers': {'Content-Type': 'application/json'},
+            'body': json.dumps({'status': 'ignored'})
+        }
+    
+    # Получаем новые сообщения от бота
+    new_messages = body.get('new_messages', [])
+    chat_id = body.get('chat_id', '')
+    
+    print(f'Received {len(new_messages)} messages from Suvvy for chat {chat_id}')
+    
+    # Логируем сообщения (здесь можно сохранить в БД или отправить через WebSocket)
+    for msg in new_messages:
+        msg_type = msg.get('type', 'text')
+        sender = msg.get('message_sender', 'ai')
+        
+        if msg_type == 'text':
+            text = msg.get('text', '')
+            print(f'[{chat_id}] {sender}: {text}')
+        else:
+            file_info = msg.get('file', {})
+            print(f'[{chat_id}] {sender} sent {msg_type}: {file_info.get("name", "file")}')
+    
+    # Возвращаем успех (обязательно 200-299!)
+    return {
+        'statusCode': 200,
+        'headers': {'Content-Type': 'application/json'},
+        'body': json.dumps({
+            'status': 'ok',
+            'received_messages': len(new_messages),
+            'chat_id': chat_id
+        })
+    }
