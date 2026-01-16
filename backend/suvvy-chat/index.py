@@ -1,9 +1,10 @@
 import json
 import os
-from suvvyapi import Suvvy, Message
+import urllib.request
+import hashlib
 
 def handler(event: dict, context) -> dict:
-    '''API для общения с чат-ботом Suvvy'''
+    '''API для отправки сообщений в Suvvy через webhook'''
     method = event.get('httpMethod', 'POST')
 
     if method == 'OPTIONS':
@@ -57,26 +58,55 @@ def handler(event: dict, context) -> dict:
             'body': json.dumps({'error': 'Suvvy not configured'})
         }
 
-    # Используем официальную библиотеку Suvvy
+    # Отправляем сообщение через Suvvy Webhook API
     try:
-        suvvy = Suvvy(suvvy_token)
+        # Генерируем уникальные ID для сообщения и чата
+        chat_id = session_id or user_phone or hashlib.md5(user_name.encode()).hexdigest()
+        message_id = hashlib.md5(f'{chat_id}-{user_message}-{os.urandom(8).hex()}'.encode()).hexdigest()
         
-        # Для первого сообщения используем predict без истории
-        if not session_id:
-            response = suvvy.predict(Message(text=user_message))
-            history_id = response.history_id if hasattr(response, 'history_id') else f'chat-{user_phone}'
-        else:
-            # Для последующих используем историю
-            try:
-                history = suvvy.as_history(session_id)
-                response = history.predict_add_message(Message(text=user_message))
-                history_id = session_id
-            except:
-                # Если истории не существует, создаём новую
-                response = suvvy.predict(Message(text=user_message))
-                history_id = response.history_id if hasattr(response, 'history_id') else session_id
+        # Формируем payload согласно документации Suvvy
+        payload = {
+            'api_version': 1,
+            'message_id': message_id,
+            'chat_id': chat_id,
+            'text': user_message,
+            'message_sender': 'customer',
+            'source': f'{user_name} с сайта',
+            'client_name': user_name,
+            'client_phone': user_phone
+        }
         
-        bot_response = response.text if hasattr(response, 'text') else str(response)
+        data = json.dumps(payload).encode('utf-8')
+        
+        req = urllib.request.Request(
+            'https://api.suvvy.ai/api/webhook/custom/message',
+            data=data,
+            headers={
+                'Authorization': f'Bearer {suvvy_token}',
+                'Content-Type': 'application/json'
+            },
+            method='POST'
+        )
+        
+        with urllib.request.urlopen(req, timeout=30) as response:
+            result = json.loads(response.read().decode('utf-8'))
+            
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'success': True,
+                    'response': 'Сообщение отправлено! Наш менеджер ответит вам в ближайшее время.',
+                    'session_id': chat_id
+                })
+            }
+            
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode('utf-8')
+        print(f'Suvvy webhook error: {e.code} - {error_body}')
         
         return {
             'statusCode': 200,
@@ -86,13 +116,12 @@ def handler(event: dict, context) -> dict:
             },
             'body': json.dumps({
                 'success': True,
-                'response': bot_response,
-                'session_id': history_id
+                'response': 'Спасибо за сообщение! Мы свяжемся с вами в ближайшее время.',
+                'session_id': chat_id if 'chat_id' in locals() else session_id
             })
         }
-            
     except Exception as e:
-        print(f'Suvvy error: {str(e)}')
+        print(f'Error: {str(e)}')
         
         return {
             'statusCode': 200,
@@ -102,7 +131,7 @@ def handler(event: dict, context) -> dict:
             },
             'body': json.dumps({
                 'success': True,
-                'response': 'Спасибо за сообщение! Наш менеджер свяжется с вами в ближайшее время.',
+                'response': 'Спасибо за обращение! Скоро ответим.',
                 'session_id': session_id
             })
         }
