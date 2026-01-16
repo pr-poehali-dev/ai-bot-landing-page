@@ -1,0 +1,27 @@
+{
+  "tests": [
+    {
+      "name": "Get bot info",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "action": "getBotInfo"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "data": {
+          "ok": true
+        }
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200,
+      "bodyMatcher": "partial"
+    }
+  ]
+}
