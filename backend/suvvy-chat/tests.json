@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing parameters",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "message": "Test"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "chatId and message are required"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

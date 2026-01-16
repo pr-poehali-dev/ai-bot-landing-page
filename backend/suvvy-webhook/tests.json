@@ -1,0 +1,29 @@
+{
+  "tests": [
+    {
+      "name": "Webhook GET health check",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "status": "active"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Webhook POST test",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "chatId": "test_chat_123",
+        "message": "Test response from Suvvy",
+        "userId": "test_user"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

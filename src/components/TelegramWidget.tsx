@@ -68,19 +68,20 @@ const TelegramWidget = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const messageText = inputMessage;
     setInputMessage('');
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/61e3f83e-fb55-4795-b25f-f543d68ca942', {
+      const response = await fetch('https://functions.poehali.dev/ea82110a-ceb2-483e-abca-e7ba402bac62', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          action: 'sendMessage',
           chatId: chatId,
-          message: `Новое сообщение с сайта:\n\n${inputMessage}\n\n(Chat ID: ${chatId})`
+          message: messageText,
+          userId: chatId
         })
       });
 
@@ -89,11 +90,32 @@ const TelegramWidget = () => {
       if (data.success) {
         const botMessage: Message = {
           id: Date.now() + 1,
-          text: 'Спасибо за сообщение! Мы получили ваш запрос и скоро ответим в Telegram.',
+          text: 'AI ассистент обрабатывает ваш запрос...',
           from: 'bot',
           timestamp: Date.now()
         };
         setMessages(prev => [...prev, botMessage]);
+        
+        setTimeout(async () => {
+          try {
+            const pollResponse = await fetch(`https://functions.poehali.dev/fc7f8155-01f4-400e-bd52-c5c9af34df2f?chatId=${chatId}`);
+            if (pollResponse.ok) {
+              const pollData = await pollResponse.json();
+              if (pollData.message) {
+                setMessages(prev => {
+                  const updated = [...prev];
+                  updated[updated.length - 1] = {
+                    ...updated[updated.length - 1],
+                    text: pollData.message
+                  };
+                  return updated;
+                });
+              }
+            }
+          } catch (pollError) {
+            console.error('Polling error:', pollError);
+          }
+        }, 2000);
       } else {
         throw new Error(data.error || 'Failed to send message');
       }
@@ -101,7 +123,7 @@ const TelegramWidget = () => {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: Date.now() + 1,
-        text: 'Извините, произошла ошибка при отправке сообщения. Попробуйте позже или напишите напрямую в Telegram: @khurmapro_bot',
+        text: 'Извините, произошла ошибка при отправке сообщения. Проверьте настройки API или попробуйте позже.',
         from: 'bot',
         timestamp: Date.now()
       };
