@@ -1,6 +1,5 @@
 {
   "suvvy-chat": "https://functions.poehali.dev/ea82110a-ceb2-483e-abca-e7ba402bac62",
   "suvvy-webhook": "https://functions.poehali.dev/fc7f8155-01f4-400e-bd52-c5c9af34df2f",
-  "telegram-chat": "https://functions.poehali.dev/61e3f83e-fb55-4795-b25f-f543d68ca942",
   "send-telegram": "https://functions.poehali.dev/967a1e10-5f93-415b-abe1-38af0891f912"
 }
