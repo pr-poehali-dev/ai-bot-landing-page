@@ -11,14 +11,8 @@ interface Message {
 
 export default function LiveChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: 'Здравствуйте! Я онлайн-консультант. Чем могу помочь?',
-      sender: 'bot',
-      timestamp: new Date()
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
   const [inputText, setInputText] = useState('');
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
@@ -57,6 +51,7 @@ export default function LiveChat() {
           }));
 
           setMessages(prev => [...prev, ...newMessages]);
+          setIsTyping(false);
         }
       } catch (error) {
         console.error('Error polling messages:', error);
@@ -90,6 +85,7 @@ export default function LiveChat() {
     setMessages(prev => [...prev, newMessage]);
     setInputText('');
     setIsSending(true);
+    setIsTyping(true);
 
     try {
       // Отправляем сообщение боту Suvvy
@@ -108,30 +104,12 @@ export default function LiveChat() {
 
       const data = await response.json();
 
-      if (data.success && data.response) {
-        // Обновляем session_id если изменился
-        if (data.session_id) {
-          setSessionId(data.session_id);
-        }
-
-        // Добавляем ответ бота
-        const botMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: data.response,
-          sender: 'bot',
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, botMessage]);
-      } else {
-        // Резервный ответ при ошибке
-        const botMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: 'Извините, произошла ошибка. Попробуйте еще раз.',
-          sender: 'bot',
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, botMessage]);
+      // Обновляем session_id если изменился
+      if (data.session_id) {
+        setSessionId(data.session_id);
       }
+
+      // Сообщения от бота придут через polling, не добавляем их здесь
 
       // Дополнительно отправляем в Telegram для уведомления
       fetch('https://functions.poehali.dev/3e921b18-247b-45a8-a7e5-730802648b9a', {
@@ -148,15 +126,7 @@ export default function LiveChat() {
 
     } catch (error) {
       console.error('Error sending message:', error);
-      
-      // Резервный ответ при ошибке сети
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: 'Спасибо за сообщение! Мы получили вашу заявку и свяжемся с вами в ближайшее время.',
-        sender: 'bot',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, botMessage]);
+      setIsTyping(false);
     } finally {
       setIsSending(false);
     }
@@ -177,12 +147,17 @@ export default function LiveChat() {
     <>
       {/* Кнопка чата */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-primary hover:bg-primary/90 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 animate-bounce-slow"
-        >
-          <Icon name="MessageCircle" size={28} />
-        </button>
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+          <div className="bg-white px-4 py-2 rounded-lg shadow-lg border-2 border-primary/20 animate-pulse">
+            <p className="text-sm font-semibold text-foreground">🤖 Протестируй бота!</p>
+          </div>
+          <button
+            onClick={() => setIsOpen(true)}
+            className="w-16 h-16 bg-primary hover:bg-primary/90 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 animate-bounce-slow"
+          >
+            <Icon name="Bot" size={28} />
+          </button>
+        </div>
       )}
 
       {/* Окно чата */}
@@ -195,8 +170,8 @@ export default function LiveChat() {
                 <Icon name="MessageCircle" size={20} />
               </div>
               <div>
-                <h3 className="font-bold text-lg">Онлайн-чат</h3>
-                <p className="text-xs text-white/80">Мы онлайн</p>
+                <h3 className="font-bold text-lg">Тестовый бот консультант автосалона</h3>
+                <p className="text-xs text-white/80">🤖 ИИ-ассистент онлайн</p>
               </div>
             </div>
             <button
@@ -212,10 +187,10 @@ export default function LiveChat() {
             <div className="flex-1 p-6 flex flex-col justify-center">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="User" className="text-primary" size={28} />
+                  <Icon name="Bot" className="text-primary" size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Начать чат</h3>
-                <p className="text-muted-foreground text-sm">Представьтесь, чтобы мы могли вам помочь</p>
+                <h3 className="text-xl font-bold text-foreground mb-2">Протестируйте бота</h3>
+                <p className="text-muted-foreground text-sm">Задайте вопрос об автомобилях прямо сейчас</p>
               </div>
               <div className="space-y-4">
                 <div>
@@ -274,6 +249,20 @@ export default function LiveChat() {
                     </div>
                   </div>
                 ))}
+                
+                {/* Индикатор "печатает" */}
+                {isTyping && (
+                  <div className="mb-4 flex justify-start">
+                    <div className="bg-white text-foreground rounded-2xl rounded-bl-none shadow-sm border border-slate-200 px-4 py-3">
+                      <div className="flex gap-1 items-center">
+                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
                 <div ref={messagesEndRef} />
               </div>
 
