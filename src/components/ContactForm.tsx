@@ -16,7 +16,7 @@ export default function ContactForm() {
     setError('');
 
     try {
-      const response = await fetch('https://functions.poehali.dev/967a1e10-5f93-415b-abe1-38af0891f912', {
+      const response = await fetch('https://functions.poehali.dev/3e921b18-247b-45a8-a7e5-730802648b9a', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

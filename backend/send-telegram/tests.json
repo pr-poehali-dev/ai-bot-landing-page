@@ -1,0 +1,18 @@
+{
+  "tests": [
+    {
+      "name": "Test form submission",
+      "method": "POST",
+      "body": {
+        "name": "Иван Тестов",
+        "phone": "+7 999 123-45-67",
+        "message": "Тестовая заявка"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
