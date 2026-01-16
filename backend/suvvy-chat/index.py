@@ -1,7 +1,6 @@
 import json
 import os
-import urllib.request
-import urllib.parse
+from suvvyapi import Suvvy, Message
 
 def handler(event: dict, context) -> dict:
     '''API для общения с чат-ботом Suvvy'''
@@ -58,52 +57,26 @@ def handler(event: dict, context) -> dict:
             'body': json.dumps({'error': 'Suvvy not configured'})
         }
 
-    # Отправляем сообщение в Suvvy API (правильный endpoint)
+    # Используем официальную библиотеку Suvvy
     try:
-        # Извлекаем токен из формата cc-xxxxx
-        suvvy_url = f'https://www.suvvy.ai/api/dialogue/{suvvy_token}'
+        suvvy = Suvvy(suvvy_token)
         
-        # Формат для Suvvy: history_id для сохранения истории диалога
-        payload = {
-            'message': user_message,
-            'history_id': session_id or f'chat-{user_phone}',
-            'user_name': user_name,
-            'user_phone': user_phone
-        }
+        # Для первого сообщения используем predict без истории
+        if not session_id:
+            response = suvvy.predict(Message(text=user_message))
+            history_id = response.history_id if hasattr(response, 'history_id') else f'chat-{user_phone}'
+        else:
+            # Для последующих используем историю
+            try:
+                history = suvvy.as_history(session_id)
+                response = history.predict_add_message(Message(text=user_message))
+                history_id = session_id
+            except:
+                # Если истории не существует, создаём новую
+                response = suvvy.predict(Message(text=user_message))
+                history_id = response.history_id if hasattr(response, 'history_id') else session_id
         
-        data = json.dumps(payload).encode('utf-8')
-        
-        req = urllib.request.Request(
-            suvvy_url,
-            data=data,
-            headers={
-                'Content-Type': 'application/json'
-            },
-            method='POST'
-        )
-        
-        with urllib.request.urlopen(req, timeout=30) as response:
-            result = json.loads(response.read().decode('utf-8'))
-            
-            # Suvvy возвращает ответ в поле 'response' или 'text'
-            bot_response = result.get('response', result.get('text', 'Спасибо за сообщение!'))
-            
-            return {
-                'statusCode': 200,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({
-                    'success': True,
-                    'response': bot_response,
-                    'session_id': payload['history_id']
-                })
-            }
-            
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode('utf-8')
-        print(f'Suvvy API error: {e.code} - {error_body}')
+        bot_response = response.text if hasattr(response, 'text') else str(response)
         
         return {
             'statusCode': 200,
@@ -113,12 +86,13 @@ def handler(event: dict, context) -> dict:
             },
             'body': json.dumps({
                 'success': True,
-                'response': 'Спасибо за ваше сообщение! Наш менеджер свяжется с вами в ближайшее время.',
-                'session_id': session_id
+                'response': bot_response,
+                'session_id': history_id
             })
         }
+            
     except Exception as e:
-        print(f'Error: {str(e)}')
+        print(f'Suvvy error: {str(e)}')
         
         return {
             'statusCode': 200,
@@ -128,7 +102,7 @@ def handler(event: dict, context) -> dict:
             },
             'body': json.dumps({
                 'success': True,
-                'response': 'Спасибо за сообщение! Мы скоро ответим.',
+                'response': 'Спасибо за сообщение! Наш менеджер свяжется с вами в ближайшее время.',
                 'session_id': session_id
             })
         }
