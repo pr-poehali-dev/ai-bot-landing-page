@@ -62,8 +62,8 @@ export default function ResultsSection() {
                   <span className="font-semibold">Средняя конверсия:</span>
                   <span className="text-2xl font-bold text-green-600">0,36%</span>
                 </div>
-                <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                  <span className="font-semibold">Ваш автосалон теряет до 75% продаж каждый месяц</span>
+                <div className="p-3 bg-red-50 rounded-lg border border-red-200">
+                  <span className="font-semibold text-red-600">Ваш автосалон теряет 75% продаж каждый месяц</span>
                 </div>
               </div>
               <div className="mt-4 p-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg text-center">
