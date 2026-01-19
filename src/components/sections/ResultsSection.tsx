@@ -63,8 +63,8 @@ export default function ResultsSection() {
                   <span className="text-2xl font-bold text-green-600">0,36%</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                  <span className="font-semibold">Номеров телефонов получено:</span>
-                  <span className="text-xl font-bold">11-12</span>
+                  <span className="font-semibold">Рост полученных контактов:</span>
+                  <span className="text-xl font-bold text-green-600">+157%</span>
                 </div>
               </div>
               <div className="mt-4 p-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg text-center">
