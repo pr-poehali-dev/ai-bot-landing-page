@@ -2,7 +2,7 @@ import Icon from '@/components/ui/icon';
 
 export default function Footer() {
   return (
-    <footer className="py-12 bg-slate-900 text-white">
+    <footer id="footer" className="py-12 bg-slate-900 text-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <h3 className="font-heading text-2xl font-bold mb-4">Свяжитесь со мной</h3>

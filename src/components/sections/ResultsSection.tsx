@@ -4,7 +4,7 @@ import Icon from '@/components/ui/icon';
 
 export default function ResultsSection() {
   return (
-    <section className="py-20 bg-white">
+    <section id="results" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-center mb-4">

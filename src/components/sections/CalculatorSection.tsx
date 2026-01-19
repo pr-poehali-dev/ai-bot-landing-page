@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
+import CalculatorModal from '@/components/CalculatorModal';
 
 interface CalculatorSectionProps {
   chatsPerMonth: number;
@@ -13,6 +17,7 @@ interface CalculatorSectionProps {
 }
 
 export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, stats }: CalculatorSectionProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <section id="calculator" className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -79,13 +84,32 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
           </Card>
 
           <div className="text-center">
-            <p className="text-lg font-semibold text-primary mb-4">
+            <Button 
+              size="lg" 
+              className="px-8 py-6 text-lg mb-4"
+              onClick={() => {
+                setIsModalOpen(true);
+                if (typeof window !== 'undefined' && (window as any).ym) {
+                  (window as any).ym(106250852, 'reachGoal', 'calculator_get_pdf_click');
+                }
+              }}
+            >
+              <Icon name="FileText" className="mr-2" size={20} />
+              Получить подробный расчёт в PDF
+            </Button>
+            <p className="text-lg font-semibold text-primary mb-2">
               Окупаемость &lt; 2 недель
             </p>
             <p className="text-muted-foreground">При средней прибыли 50 000 ₽ с одного проданного авто</p>
           </div>
         </div>
       </div>
+
+      <CalculatorModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        profit={stats.profit}
+      />
     </section>
   );
 }

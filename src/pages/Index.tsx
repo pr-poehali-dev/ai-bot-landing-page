@@ -2,8 +2,11 @@ import { useState } from 'react';
 import Header from '@/components/sections/Header';
 import HeroSection from '@/components/sections/HeroSection';
 import ProblemsSection from '@/components/sections/ProblemsSection';
+import AboutSection from '@/components/sections/AboutSection';
 import ResultsSection from '@/components/sections/ResultsSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import FeaturesSection from '@/components/sections/FeaturesSection';
+import ComparisonSection from '@/components/sections/ComparisonSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import PricingSection from '@/components/sections/PricingSection';
 import CTASection from '@/components/sections/CTASection';
@@ -28,8 +31,11 @@ export default function Index() {
       <Header />
       <HeroSection />
       <ProblemsSection />
+      <AboutSection />
       <ResultsSection />
+      <TestimonialsSection />
       <FeaturesSection />
+      <ComparisonSection />
       <CalculatorSection 
         chatsPerMonth={chatsPerMonth} 
         setChatsPerMonth={setChatsPerMonth} 
