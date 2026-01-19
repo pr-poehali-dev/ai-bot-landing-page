@@ -14,11 +14,8 @@ export default function LiveChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [inputText, setInputText] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userPhone, setUserPhone] = useState('');
-  const [isStarted, setIsStarted] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [sessionId, setSessionId] = useState(`session-${Date.now()}`);
+  const [sessionId] = useState(`session-${Date.now()}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -31,7 +28,7 @@ export default function LiveChat() {
 
   // Функция для получения новых сообщений
   const pollMessages = async () => {
-    if (!isStarted || !sessionId) return;
+    if (!sessionId) return;
 
     try {
       const response = await fetch(
@@ -59,19 +56,13 @@ export default function LiveChat() {
 
   // Polling для получения новых сообщений от Suvvy (каждую секунду)
   useEffect(() => {
-    if (!isStarted || !sessionId) return;
+    if (!sessionId) return;
 
     const interval = setInterval(pollMessages, 1000);
     return () => clearInterval(interval);
-  }, [isStarted, sessionId]);
+  }, [sessionId]);
 
-  const handleStartChat = () => {
-    if (!userName.trim() || !userPhone.trim()) {
-      alert('Пожалуйста, заполните все поля');
-      return;
-    }
-    setIsStarted(true);
-  };
+
 
   const handleSendMessage = async () => {
     if (!inputText.trim() || isSending) return;
@@ -98,8 +89,8 @@ export default function LiveChat() {
         },
         body: JSON.stringify({
           message: userMessageText,
-          name: userName,
-          phone: userPhone,
+          name: 'Гость',
+          phone: '',
           session_id: sessionId
         }),
       });
@@ -116,18 +107,7 @@ export default function LiveChat() {
       setTimeout(() => pollMessages(), 2000);
       setTimeout(() => pollMessages(), 5000);
 
-      // Дополнительно отправляем в Telegram для уведомления
-      fetch('https://functions.poehali.dev/3e921b18-247b-45a8-a7e5-730802648b9a', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: userName,
-          phone: userPhone,
-          message: `💬 Сообщение в чате:\n${userMessageText}`
-        }),
-      }).catch(() => {});
+
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -140,11 +120,7 @@ export default function LiveChat() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      if (isStarted) {
-        handleSendMessage();
-      } else {
-        handleStartChat();
-      }
+      handleSendMessage();
     }
   };
 
@@ -187,48 +163,7 @@ export default function LiveChat() {
             </button>
           </div>
 
-          {/* Форма начала чата */}
-          {!isStarted ? (
-            <div className="flex-1 p-6 flex flex-col justify-center">
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="Bot" className="text-primary" size={28} />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Протестируйте бота</h3>
-                <p className="text-muted-foreground text-sm">Задайте вопрос об автомобилях прямо сейчас</p>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Ваше имя"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="tel"
-                    placeholder="Телефон"
-                    value={userPhone}
-                    onChange={(e) => setUserPhone(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                  />
-                </div>
-                <Button
-                  onClick={handleStartChat}
-                  className="w-full py-3 text-base font-semibold"
-                  size="lg"
-                >
-                  Начать чат
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <>
+          <>
               {/* Сообщения */}
               <div className="flex-1 p-4 overflow-y-auto bg-slate-50">
                 {messages.map((msg) => (
@@ -296,8 +231,7 @@ export default function LiveChat() {
                   </button>
                 </div>
               </div>
-            </>
-          )}
+          </>
         </div>
       )}
     </>
