@@ -88,10 +88,10 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
               size="lg" 
               className="px-8 py-6 text-lg mb-4"
               onClick={() => {
-                setIsModalOpen(true);
                 if (typeof window !== 'undefined' && (window as any).ym) {
                   (window as any).ym(106250852, 'reachGoal', 'calculator_get_pdf_click');
                 }
+                document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
               <Icon name="FileText" className="mr-2" size={20} />
