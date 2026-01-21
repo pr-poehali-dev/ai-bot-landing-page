@@ -28,10 +28,24 @@ export default function ExitIntentPopup({ onOpenChat }: ExitIntentPopupProps) {
       }
     };
 
+    // Автоматическое появление через 40 секунд
+    const autoShowTimer = setTimeout(() => {
+      if (!hasShown) {
+        setIsVisible(true);
+        setHasShown(true);
+        
+        if (typeof window !== 'undefined' && (window as any).ym) {
+          (window as any).ym(106250852, 'reachGoal', 'exit_intent_popup_shown_auto');
+          (window as any).ym(106250852, 'reachGoal', `exit_intent_variant_${variant}`);
+        }
+      }
+    }, 40000);
+
     document.addEventListener('mouseleave', handleMouseLeave);
     
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave);
+      clearTimeout(autoShowTimer);
     };
   }, [hasShown, variant]);
 
