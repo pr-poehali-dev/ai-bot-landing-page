@@ -4,17 +4,17 @@ import Icon from '@/components/ui/icon';
 export default function ComparisonSection() {
   const comparisons = [
     {
-      parameter: 'Конверсия с Авито',
-      without: '0,14%',
-      with: '0,36%',
-      benefit: '+157%',
+      parameter: 'Лидов в месяц',
+      without: '170-190 шт',
+      with: '250-270 шт',
+      benefit: '+40-50%',
       icon: 'TrendingUp'
     },
     {
-      parameter: 'Контактов с 300 заявок/мес',
-      without: '4–5 шт',
-      with: '11–12 шт',
-      benefit: '+140%',
+      parameter: 'Дополнительных лидов',
+      without: '—',
+      with: '+80-100 шт',
+      benefit: 'Без рекламы',
       icon: 'Users'
     },
     {
