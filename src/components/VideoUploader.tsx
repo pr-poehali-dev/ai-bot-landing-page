@@ -28,32 +28,46 @@ export default function VideoUploader({ onVideoUploaded }: VideoUploaderProps) {
     setError('');
 
     try {
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const base64 = reader.result?.toString().split(',')[1];
-        
-        const response = await fetch('https://functions.poehali.dev/0dbdb6cd-b3f5-4a0e-b65b-94e5bdeaa101', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            video: base64,
-            filename: file.name,
-          }),
-        });
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result?.toString().split(',')[1];
+          if (result) {
+            resolve(result);
+          } else {
+            reject(new Error('Не удалось прочитать файл'));
+          }
+        };
+        reader.onerror = () => reject(new Error('Ошибка чтения файла'));
+        reader.readAsDataURL(file);
+      });
+      
+      const response = await fetch('https://functions.poehali.dev/0dbdb6cd-b3f5-4a0e-b65b-94e5bdeaa101', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          video: base64,
+          filename: file.name,
+        }),
+      });
 
-        const data = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-        if (response.ok && data.success) {
-          onVideoUploaded(data.url);
-        } else {
-          setError('Ошибка при загрузке видео');
-        }
-      };
-      reader.readAsDataURL(file);
+      const data = await response.json();
+
+      if (data.success && data.url) {
+        onVideoUploaded(data.url);
+        setError('');
+      } else {
+        setError(data.error || 'Ошибка при загрузке видео');
+      }
     } catch (err) {
-      setError('Ошибка при загрузке видео');
+      console.error('Upload error:', err);
+      setError(err instanceof Error ? err.message : 'Ошибка при загрузке видео');
     } finally {
       setIsUploading(false);
     }
