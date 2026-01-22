@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 
@@ -6,6 +6,17 @@ export default function HeroSection() {
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [inputUrl, setInputUrl] = useState('');
+
+  useEffect(() => {
+    fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.videos && data.videos.length > 0) {
+          setVideoUrl(data.videos[0].url);
+        }
+      })
+      .catch(err => console.error('Error loading video:', err));
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });

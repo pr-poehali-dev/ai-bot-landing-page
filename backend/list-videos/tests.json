@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Test list videos",
+      "method": "GET",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "videos": []
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
