@@ -128,7 +128,7 @@ export default function HeroSection() {
               <div className="flex flex-col items-center">
                 {videoUrl ? (
                   <div className="relative group mb-6">
-                    <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl bg-gradient-to-br from-orange-500 to-orange-600 p-2">
+                    <div className="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl bg-gradient-to-br from-orange-500 to-orange-600 p-2">
                       <video 
                         src={videoUrl} 
                         controls 
@@ -148,7 +148,7 @@ export default function HeroSection() {
                     </button>
                   </div>
                 ) : (
-                  <div className="w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl mb-6">
+                  <div className="w-80 h-80 md:w-96 md:h-96 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl mb-6">
                     <div className="text-center p-8">
                       <Icon name="Video" className="text-white mx-auto mb-4" size={64} />
                       {showUrlInput ? (

@@ -57,29 +57,26 @@ export default function ExitIntentPopup({ onOpenChat }: ExitIntentPopupProps) {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const handleBotClick = () => {
     if (typeof window !== 'undefined' && (window as any).ym) {
-      (window as any).ym(106250852, 'reachGoal', 'exit_intent_form_submit');
+      (window as any).ym(106250852, 'reachGoal', 'exit_intent_bot_click');
     }
-    
-    alert(`Спасибо! Перезвоним на ${phone} в течение 2 минут`);
+    window.open('https://t.me/khurmapro_bot', '_blank');
     setIsVisible(false);
   };
 
   if (!isVisible) return null;
 
   const variantA = {
-    title: '⚠️ Уходите? Не упустите +50% лидов!',
-    subtitle: 'Автосалон АвтоХайп увеличил лиды с 170 до 260 в месяц. Получите демо за 2 минуты!',
-    buttonText: 'Показать демо бота',
+    title: '🤖 Протестируйте бота сами!',
+    subtitle: 'Пообщайтесь с ИИ-агентом для автосалонов и убедитесь в его эффективности. Это займёт всего 2 минуты.',
+    buttonText: 'Пообщаться с ботом',
   };
 
   const variantB = {
-    title: '🤖 Рост на 40-50% без увеличения рекламы!',
-    subtitle: 'Автосалон АвтоХайп: с 170-190 до 250-270 лидов в месяц. Получите такой же результат!',
-    buttonText: 'Заказать бесплатный звонок',
+    title: '🤖 Протестируйте бота сами!',
+    subtitle: 'Пообщайтесь с ИИ-агентом для автосалонов и убедитесь в его эффективности. Это займёт всего 2 минуты.',
+    buttonText: 'Пообщаться с ботом',
   };
 
   const content = variant === 'A' ? variantA : variantB;
@@ -112,46 +109,29 @@ export default function ExitIntentPopup({ onOpenChat }: ExitIntentPopupProps) {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+7 999 123 45 67"
-                required
-                className="text-lg py-6 text-center"
-              />
-            </div>
-
+          <div className="space-y-4">
             <Button
-              type="submit"
+              onClick={handleBotClick}
               size="lg"
-              className="w-full py-6 text-base font-bold shadow-lg hover:shadow-xl transition-all bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
+              className="w-full py-6 text-base font-bold shadow-lg hover:shadow-xl transition-all bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
             >
-              <Icon name="Phone" size={20} />
+              <Icon name="MessageCircle" size={20} />
               {content.buttonText}
             </Button>
-          </form>
+          </div>
 
           <div className="mt-6 space-y-2">
             <p className="text-sm text-center text-muted-foreground flex items-center justify-center gap-2">
               <Icon name="CheckCircle" size={16} className="text-green-600" />
-              Бесплатная консультация
+              Работает 24/7 без выходных
             </p>
             <p className="text-sm text-center text-muted-foreground flex items-center justify-center gap-2">
               <Icon name="CheckCircle" size={16} className="text-green-600" />
-              Перезвоним через 2 минуты
+              Отвечает за 10 секунд
             </p>
             <p className="text-sm text-center text-muted-foreground flex items-center justify-center gap-2">
               <Icon name="CheckCircle" size={16} className="text-green-600" />
-              Покажем бота в действии
-            </p>
-          </div>
-
-          <div className="mt-4 text-center">
-            <p className="text-xs text-red-600 font-bold animate-pulse">
-              ⏰ Осталось 7 мест в этом месяце
+              Рост лидов на 40-50%
             </p>
           </div>
         </div>
