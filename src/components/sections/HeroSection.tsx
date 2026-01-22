@@ -125,72 +125,88 @@ export default function HeroSection() {
             </div>
 
             <div className="order-1 md:order-2">
-              {videoUrl ? (
-                <div className="rounded-3xl overflow-hidden shadow-2xl relative group">
-                  <video 
-                    src={videoUrl} 
-                    controls 
-                    className="w-full aspect-video"
-                  >
-                    Ваш браузер не поддерживает видео
-                  </video>
-                  <button
-                    onClick={() => {
-                      setVideoUrl('');
-                      localStorage.removeItem('heroVideoUrl');
-                    }}
-                    className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Icon name="X" size={20} />
-                  </button>
-                </div>
-              ) : (
-                <div className="aspect-video bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl flex items-center justify-center shadow-2xl">
-                  <div className="text-center p-8">
-                    <Icon name="Video" className="text-white mx-auto mb-4" size={64} />
-                    {showUrlInput ? (
-                      <div className="max-w-md mx-auto">
-                        <input
-                          type="url"
-                          placeholder="Вставьте ссылку на видео"
-                          value={inputUrl}
-                          onChange={(e) => setInputUrl(e.target.value)}
-                          className="w-full px-4 py-3 rounded-full mb-3 text-gray-900"
-                        />
-                        <div className="flex gap-2 justify-center">
+              <div className="flex flex-col items-center">
+                {videoUrl ? (
+                  <div className="relative group mb-6">
+                    <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl bg-gradient-to-br from-orange-500 to-orange-600 p-2">
+                      <video 
+                        src={videoUrl} 
+                        controls 
+                        className="w-full h-full object-cover rounded-full"
+                      >
+                        Ваш браузер не поддерживает видео
+                      </video>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setVideoUrl('');
+                        localStorage.removeItem('heroVideoUrl');
+                      }}
+                      className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Icon name="X" size={20} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl mb-6">
+                    <div className="text-center p-8">
+                      <Icon name="Video" className="text-white mx-auto mb-4" size={64} />
+                      {showUrlInput ? (
+                        <div className="max-w-md mx-auto">
+                          <input
+                            type="url"
+                            placeholder="Вставьте ссылку на видео"
+                            value={inputUrl}
+                            onChange={(e) => setInputUrl(e.target.value)}
+                            className="w-full px-4 py-3 rounded-full mb-3 text-gray-900"
+                          />
+                          <div className="flex gap-2 justify-center">
+                            <Button
+                              onClick={handleUrlSubmit}
+                              className="bg-white text-orange-600 hover:bg-gray-100 rounded-full"
+                            >
+                              Добавить
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => {
+                                setShowUrlInput(false);
+                                setInputUrl('');
+                              }}
+                              className="bg-transparent border-white text-white hover:bg-white/10 rounded-full"
+                            >
+                              Отмена
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <p className="text-white text-lg font-semibold mb-4">Добавьте видео</p>
                           <Button
-                            onClick={handleUrlSubmit}
+                            onClick={() => setShowUrlInput(true)}
                             className="bg-white text-orange-600 hover:bg-gray-100 rounded-full"
                           >
-                            Добавить
+                            <Icon name="Link" size={18} className="mr-2" />
+                            Вставить ссылку
                           </Button>
-                          <Button
-                            variant="outline"
-                            onClick={() => {
-                              setShowUrlInput(false);
-                              setInputUrl('');
-                            }}
-                            className="bg-transparent border-white text-white hover:bg-white/10 rounded-full"
-                          >
-                            Отмена
-                          </Button>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <p className="text-white text-lg font-semibold mb-4">Добавьте видео</p>
-                        <Button
-                          onClick={() => setShowUrlInput(true)}
-                          className="bg-white text-orange-600 hover:bg-gray-100 rounded-full"
-                        >
-                          <Icon name="Link" size={18} className="mr-2" />
-                          Вставить ссылку
-                        </Button>
-                      </>
-                    )}
+                        </>
+                      )}
+                    </div>
                   </div>
+                )}
+                
+                <div className="text-center">
+                  <h3 className="font-heading text-xl md:text-2xl font-bold text-gray-900 mb-2">
+                    Марат Хурматуллин
+                  </h3>
+                  <p className="text-base md:text-lg text-gray-600 mb-1">
+                    Владелец маркетингового агенства
+                  </p>
+                  <p className="text-sm md:text-base text-gray-500">
+                    Опыт работы в автобизнесе более 8 лет
+                  </p>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
