@@ -3,31 +3,35 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 
 export default function HeroSection() {
-  const [videoUrl, setVideoUrl] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('heroVideoUrl') || '';
-    }
-    return '';
-  });
+  const [videoUrl, setVideoUrl] = useState<string>('');
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [inputUrl, setInputUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Сначала проверяем localStorage
     const savedUrl = localStorage.getItem('heroVideoUrl');
     if (savedUrl) {
+      console.log('Loaded video from localStorage:', savedUrl);
       setVideoUrl(savedUrl);
-    } else {
-      fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93')
-        .then(res => res.json())
-        .then(data => {
-          if (data.success && data.videos && data.videos.length > 0) {
-            const url = data.videos[0].url;
-            setVideoUrl(url);
-            localStorage.setItem('heroVideoUrl', url);
-          }
-        })
-        .catch(err => console.error('Error loading video:', err));
+      setIsLoading(false);
+      return;
     }
+    
+    // Если нет в localStorage, загружаем из S3
+    console.log('Loading video from S3...');
+    fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.videos && data.videos.length > 0) {
+          const url = data.videos[0].url;
+          console.log('Loaded video from S3:', url);
+          setVideoUrl(url);
+          localStorage.setItem('heroVideoUrl', url);
+        }
+      })
+      .catch(err => console.error('Error loading video:', err))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const scrollToSection = (sectionId: string) => {
