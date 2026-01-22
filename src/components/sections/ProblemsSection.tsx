@@ -3,7 +3,7 @@ import Icon from '@/components/ui/icon';
 
 export default function ProblemsSection() {
   return (
-    <section id="problems" className="py-20 bg-slate-50">
+    <section id="problems" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -23,11 +23,11 @@ export default function ProblemsSection() {
             ].map((item, index) => (
               <Card 
                 key={index} 
-                className="p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-scale-in border-l-4 border-l-red-500 bg-gradient-to-r from-white to-red-50"
+                className="p-6 hover:shadow-lg transition-all duration-300 border-l-4 border-l-red-500 bg-white rounded-2xl"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+                  <div className="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center flex-shrink-0">
                     <Icon name={item.icon as any} className="text-red-600" size={26} />
                   </div>
                   <p className="text-lg text-foreground font-semibold leading-relaxed pt-2">{item.text}</p>

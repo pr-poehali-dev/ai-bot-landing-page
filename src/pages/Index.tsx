@@ -52,7 +52,7 @@ export default function Index() {
       
       <PricingSection />
       
-      <section id="callback-form" className="py-20 bg-gradient-to-b from-slate-50 to-white">
+      <section id="callback-form" className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center mb-8">
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
@@ -65,8 +65,6 @@ export default function Index() {
           <ContactForm />
         </div>
       </section>
-      
-      <CTASection />
       
       <Footer />
     </div>
