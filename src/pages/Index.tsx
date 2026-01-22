@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Header from '@/components/sections/Header';
 import HeroSection from '@/components/sections/HeroSection';
-
+import Icon from '@/components/ui/icon';
 import FeaturesSection from '@/components/sections/FeaturesSection';
 import ResultsSection from '@/components/sections/ResultsSection';
 
