@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Header from '@/components/sections/Header';
 import HeroSection from '@/components/sections/HeroSection';
-import ProblemsSection from '@/components/sections/ProblemsSection';
+
 import FeaturesSection from '@/components/sections/FeaturesSection';
 import ResultsSection from '@/components/sections/ResultsSection';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
+
 import ComparisonSection from '@/components/sections/ComparisonSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import PricingSection from '@/components/sections/PricingSection';
@@ -34,13 +34,9 @@ export default function Index() {
       
       <HeroSection />
       
-      <ProblemsSection />
-      
       <FeaturesSection />
       
       <ResultsSection />
-      
-      <TestimonialsSection />
       
       <ComparisonSection />
       
