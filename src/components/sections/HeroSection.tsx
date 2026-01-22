@@ -6,32 +6,24 @@ export default function HeroSection() {
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [inputUrl, setInputUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Сначала проверяем localStorage
-    const savedUrl = localStorage.getItem('heroVideoUrl');
-    if (savedUrl) {
-      console.log('Loaded video from localStorage:', savedUrl);
-      setVideoUrl(savedUrl);
-      setIsLoading(false);
-      return;
-    }
-    
-    // Если нет в localStorage, загружаем из S3
-    console.log('Loading video from S3...');
-    fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93')
-      .then(res => res.json())
-      .then(data => {
+    // ВСЕГДА загружаем видео из S3 при каждом обновлении страницы
+    const loadVideo = async () => {
+      try {
+        const response = await fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93');
+        const data = await response.json();
+        
         if (data.success && data.videos && data.videos.length > 0) {
           const url = data.videos[0].url;
-          console.log('Loaded video from S3:', url);
           setVideoUrl(url);
-          localStorage.setItem('heroVideoUrl', url);
         }
-      })
-      .catch(err => console.error('Error loading video:', err))
-      .finally(() => setIsLoading(false));
+      } catch (err) {
+        console.error('Error loading video:', err);
+      }
+    };
+    
+    loadVideo();
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -42,7 +34,6 @@ export default function HeroSection() {
     if (inputUrl.trim()) {
       const url = inputUrl.trim();
       setVideoUrl(url);
-      localStorage.setItem('heroVideoUrl', url);
       setShowUrlInput(false);
       setInputUrl('');
     }
@@ -142,10 +133,7 @@ export default function HeroSection() {
                       </video>
                     </div>
                     <button
-                      onClick={() => {
-                        setVideoUrl('');
-                        localStorage.removeItem('heroVideoUrl');
-                      }}
+                      onClick={() => setVideoUrl('')}
                       className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <Icon name="X" size={20} />
