@@ -57,7 +57,7 @@ export default function ContactForm() {
             <Icon name="Check" className="text-green-600" size={32} />
           </div>
           <h3 className="text-2xl font-bold text-foreground mb-2">Заявка отправлена!</h3>
-          <p className="text-muted-foreground">Я свяжусь с вами в ближайшее время</p>
+          <p className="text-muted-foreground">Свяжусь с вами в течение 15 минут для проведения аудита</p>
         </div>
       </Card>
     );
@@ -70,10 +70,10 @@ export default function ContactForm() {
           <Icon name="Rocket" className="text-primary" size={32} />
         </div>
         <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
-          Получите бесплатное ДЕМО
+          Заказать обратный звонок
         </h3>
         <p className="text-muted-foreground">
-          Свяжемся в течение 15 минут
+          Проведу бесплатный аудит вашего автосалона и расскажу, нужен ли вам ИИ-агент
         </p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -133,7 +133,7 @@ export default function ContactForm() {
           ) : (
             <span className="flex items-center justify-center gap-2">
               <Icon name="Send" size={18} />
-              ПОЛУЧИТЬ БЕСПЛАТНОЕ ДЕМО
+              ЗАКАЗАТЬ ОБРАТНЫЙ ЗВОНОК
             </span>
           )}
         </Button>
