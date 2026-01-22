@@ -53,11 +53,33 @@ export default function ContactForm() {
     return (
       <Card className="p-8 bg-white/95 backdrop-blur-sm max-w-md mx-auto animate-scale-in">
         <div className="text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Icon name="Check" className="text-green-600" size={32} />
+          <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="Bot" className="text-white" size={32} />
           </div>
-          <h3 className="text-2xl font-bold text-foreground mb-2">Заявка отправлена!</h3>
-          <p className="text-muted-foreground">Свяжусь с вами в течение 15 минут для проведения аудита</p>
+          <h3 className="text-2xl font-bold text-foreground mb-4">Попробуйте тестового бота!</h3>
+          <p className="text-muted-foreground mb-6">
+            Протестируйте ИИ-агента для автосалонов прямо сейчас в Telegram
+          </p>
+          <Button
+            size="lg"
+            className="w-full text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
+            asChild
+          >
+            <a 
+              href="https://t.me/khurmapro_bot" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2"
+              onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).ym) {
+                  (window as any).ym(106250852, 'reachGoal', 'click_try_bot_success');
+                }
+              }}
+            >
+              <Icon name="MessageCircle" size={20} />
+              Попробовать бота
+            </a>
+          </Button>
         </div>
       </Card>
     );
