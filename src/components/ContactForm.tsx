@@ -56,9 +56,9 @@ export default function ContactForm() {
           <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <Icon name="Bot" className="text-white" size={32} />
           </div>
-          <h3 className="text-2xl font-bold text-foreground mb-4">Попробуйте тестового бота!</h3>
+          <h3 className="text-2xl font-bold text-foreground mb-4">Протестируйте бота сами!</h3>
           <p className="text-muted-foreground mb-6">
-            Протестируйте ИИ-агента для автосалонов прямо сейчас в Telegram
+            Пообщайтесь с ИИ-агентом для автосалонов и убедитесь в его эффективности на собственном опыте. Это займёт всего 2 минуты.
           </p>
           <Button
             size="lg"
