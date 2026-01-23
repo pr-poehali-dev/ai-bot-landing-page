@@ -109,7 +109,7 @@ export default function HeroSection() {
                     src="https://cdn.poehali.dev/projects/a342f07f-f1f9-4615-b861-611d73a35a53/bucket/07c10242-2663-4b84-8902-10c7e8a346f2.MOV"
                     loop
                     playsInline
-                    className="w-full h-full object-cover object-[center_20%]"
+                    className="w-full h-full object-cover object-[center_30%]"
                     onClick={togglePlay}
                   >
                     Ваш браузер не поддерживает видео
