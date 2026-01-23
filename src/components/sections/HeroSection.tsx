@@ -1,29 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
-import VideoUploader from '@/components/VideoUploader';
 
 export default function HeroSection() {
-  const [videoUrl, setVideoUrl] = useState<string>('');
-  const [showUrlInput, setShowUrlInput] = useState(false);
-  const [inputUrl, setInputUrl] = useState('');
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Удалено видео
-
-
-
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleUrlSubmit = () => {
-    if (inputUrl.trim()) {
-      const url = inputUrl.trim();
-      setVideoUrl(url);
-      setShowUrlInput(false);
-      setInputUrl('');
-    }
   };
 
   return (
@@ -108,83 +88,9 @@ export default function HeroSection() {
 
             <div className="order-1 md:order-2">
               <div className="flex flex-col items-center">
-                {videoUrl ? (
-                  <div className="relative group mb-6">
-                    <div className="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl bg-gradient-to-br from-orange-500 to-orange-600 p-2">
-                      <video
-                        ref={videoRef}
-                        key={videoUrl}
-                        controls
-                        autoPlay
-                        muted
-                        playsInline
-                        loop
-                        className="w-full h-full object-cover rounded-full"
-                        onError={(e) => console.error('Ошибка загрузки видео:', e)}
-                        onLoadedData={() => console.log('Видео загружено и готово')}
-                      >
-                        <source src={videoUrl} type="video/quicktime" />
-                        Ваш браузер не поддерживает видео
-                      </video>
-                    </div>
-                    <button
-                      onClick={() => setVideoUrl('')}
-                      className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Icon name="X" size={20} />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="w-80 h-80 md:w-96 md:h-96 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl mb-6">
-                    <div className="text-center p-8">
-                      <Icon name="Video" className="text-white mx-auto mb-4" size={64} />
-                      {showUrlInput ? (
-                        <div className="max-w-md mx-auto">
-                          <input
-                            type="url"
-                            placeholder="Вставьте ссылку на видео"
-                            value={inputUrl}
-                            onChange={(e) => setInputUrl(e.target.value)}
-                            className="w-full px-4 py-3 rounded-full mb-3 text-gray-900"
-                          />
-                          <div className="flex gap-2 justify-center">
-                            <Button
-                              onClick={handleUrlSubmit}
-                              className="bg-white text-orange-600 hover:bg-gray-100 rounded-full"
-                            >
-                              Добавить
-                            </Button>
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                setShowUrlInput(false);
-                                setInputUrl('');
-                              }}
-                              className="bg-transparent border-white text-white hover:bg-white/10 rounded-full"
-                            >
-                              Отмена
-                            </Button>
-                          </div>
-                        </div>
-                      ) : (
-                        <>
-                          <p className="text-white text-lg font-semibold mb-4">Добавьте видео</p>
-                          <div className="flex flex-col gap-3">
-                            <VideoUploader onVideoUploaded={(url) => setVideoUrl(url)} />
-                            <Button
-                              onClick={() => setShowUrlInput(true)}
-                              variant="outline"
-                              className="bg-transparent border-white text-white hover:bg-white/10 rounded-full"
-                            >
-                              <Icon name="Link" size={18} className="mr-2" />
-                              Или вставить ссылку
-                            </Button>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                )}
+                <div className="w-80 h-80 md:w-96 md:h-96 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center shadow-2xl mb-6">
+                  <Icon name="Bot" className="text-white" size={120} />
+                </div>
                 
                 <div className="text-center">
                   <h3 className="font-heading text-xl md:text-2xl font-bold text-gray-900 mb-2">
