@@ -34,11 +34,11 @@ export default function Index() {
       
       <HeroSection />
       
+      <ScreenshotsSection />
+      
       <FeaturesSection />
       
       <ResultsSection />
-      
-      <ScreenshotsSection />
       
       <ComparisonSection />
       
