@@ -49,21 +49,26 @@ export default function ScreenshotsSection() {
 
   const nextImage = () => {
     if (selectedImage !== null) {
-      setSelectedImage((selectedImage + 1) % screenshots.length);
+      setSelectedImage((selectedImage + 1) % allScreenshots.length);
     }
   };
 
   const prevImage = () => {
     if (selectedImage !== null) {
-      setSelectedImage((selectedImage - 1 + screenshots.length) % screenshots.length);
+      setSelectedImage((selectedImage - 1 + allScreenshots.length) % allScreenshots.length);
     }
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <Icon name="MessageSquare" size={16} />
+              <span>Примеры диалогов</span>
+            </div>
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Скриншоты диалогов с ботом
             </h2>
@@ -72,37 +77,46 @@ export default function ScreenshotsSection() {
             </p>
           </div>
 
-          <div className="mb-16">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="bg-red-100 p-2 rounded-lg">
-                <Icon name="XCircle" size={24} className="text-red-600" />
+          <div className="mb-20">
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="flex items-center gap-3 bg-red-50 px-6 py-3 rounded-2xl border-2 border-red-200">
+                <div className="bg-red-500 p-2 rounded-lg">
+                  <Icon name="XCircle" size={24} className="text-white" />
+                </div>
+                <h3 className="font-heading text-2xl md:text-3xl font-bold text-gray-900">
+                  Как не должно быть
+                </h3>
               </div>
-              <h3 className="font-heading text-2xl md:text-3xl font-bold text-gray-900">
-                Как не должно быть
-              </h3>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
               {badScreenshots.map((screenshot, index) => (
                 <div 
                   key={index}
-                  className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-red-200"
+                  className="group relative cursor-pointer overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 bg-white border-4 border-red-100 hover:border-red-300 transform hover:-translate-y-2"
                   onClick={() => openImage(index)}
                 >
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-red-500/10 rounded-full blur-3xl"></div>
                   <img 
                     src={screenshot.url} 
                     alt={screenshot.caption}
-                    className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-red-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <p className="text-white font-semibold p-4 text-sm md:text-base">
-                      {screenshot.caption}
-                    </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-red-600/90 via-red-600/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300 flex items-end p-6">
+                    <div className="w-full">
+                      <p className="text-white font-bold text-lg mb-2">
+                        {screenshot.caption}
+                      </p>
+                      <div className="flex items-center gap-2 text-red-100 text-sm">
+                        <Icon name="AlertCircle" size={16} />
+                        <span>Клиенты уходят</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Icon name="Maximize2" size={20} className="text-gray-700" />
+                  <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg group-hover:scale-110 transition-transform">
+                    <Icon name="Maximize2" size={20} className="text-red-500" />
                   </div>
-                  <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                    <Icon name="XCircle" size={14} />
+                  <div className="absolute top-4 left-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg">
+                    <Icon name="XCircle" size={16} />
                     <span>Плохо</span>
                   </div>
                 </div>
@@ -110,37 +124,54 @@ export default function ScreenshotsSection() {
             </div>
           </div>
 
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="bg-green-100 p-2 rounded-lg">
-                <Icon name="CheckCircle2" size={24} className="text-green-600" />
+          <div className="relative">
+            <div className="absolute left-1/2 -translate-x-1/2 -top-12 flex items-center gap-4">
+              <div className="h-px w-20 bg-gradient-to-r from-transparent to-orange-300"></div>
+              <div className="bg-orange-500 text-white p-3 rounded-full shadow-lg animate-bounce">
+                <Icon name="ArrowDown" size={24} />
               </div>
-              <h3 className="font-heading text-2xl md:text-3xl font-bold text-gray-900">
-                Как работает наш бот
-              </h3>
+              <div className="h-px w-20 bg-gradient-to-l from-transparent to-orange-300"></div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="flex items-center gap-3 bg-green-50 px-6 py-3 rounded-2xl border-2 border-green-200">
+                <div className="bg-green-500 p-2 rounded-lg">
+                  <Icon name="CheckCircle2" size={24} className="text-white" />
+                </div>
+                <h3 className="font-heading text-2xl md:text-3xl font-bold text-gray-900">
+                  Как работает наш бот
+                </h3>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {goodScreenshots.map((screenshot, index) => (
                 <div 
                   key={index + badScreenshots.length}
-                  className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-green-200"
+                  className="group relative cursor-pointer overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 bg-white border-4 border-green-100 hover:border-green-300 transform hover:-translate-y-2"
                   onClick={() => openImage(index + badScreenshots.length)}
                 >
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-green-500/10 rounded-full blur-3xl"></div>
                   <img 
                     src={screenshot.url} 
                     alt={screenshot.caption}
-                    className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <p className="text-white font-semibold p-4 text-sm md:text-base">
-                      {screenshot.caption}
-                    </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-green-600/90 via-green-600/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300 flex items-end p-6">
+                    <div className="w-full">
+                      <p className="text-white font-bold text-base mb-2">
+                        {screenshot.caption}
+                      </p>
+                      <div className="flex items-center gap-2 text-green-100 text-sm">
+                        <Icon name="TrendingUp" size={16} />
+                        <span>Больше лидов</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Icon name="Maximize2" size={20} className="text-gray-700" />
+                  <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg group-hover:scale-110 transition-transform">
+                    <Icon name="Maximize2" size={20} className="text-green-500" />
                   </div>
-                  <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
-                    <Icon name="CheckCircle2" size={14} />
+                  <div className="absolute top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg">
+                    <Icon name="CheckCircle2" size={16} />
                     <span>Хорошо</span>
                   </div>
                 </div>
