@@ -9,21 +9,9 @@ export default function HeroSection() {
   const [inputUrl, setInputUrl] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    // Видео из хранилища poehali.dev
-    const videoUrl = 'https://cdn.poehali.dev/projects/a342f07f-f1f9-4615-b861-611d73a35a53/bucket/07c10242-2663-4b84-8902-10c7e8a346f2.MOV';
-    setVideoUrl(videoUrl);
-  }, []);
+  // Удалено видео
 
-  // Автовоспроизведение при загрузке видео
-  useEffect(() => {
-    if (videoUrl && videoRef.current) {
-      videoRef.current.load();
-      videoRef.current.play().catch(e => {
-        console.log('Автовоспроизведение заблокировано:', e.message);
-      });
-    }
-  }, [videoUrl]);
+
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });

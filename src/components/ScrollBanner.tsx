@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 
-interface ScrollBannerProps {
-  onOpenChat: () => void;
-}
-
-export default function ScrollBanner({ onOpenChat }: ScrollBannerProps) {
+export default function ScrollBanner() {
   const [isVisible, setIsVisible] = useState(false);
   const [isClosed, setIsClosed] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -56,7 +52,7 @@ export default function ScrollBanner({ onOpenChat }: ScrollBannerProps) {
   };
 
   const handleClick = () => {
-    onOpenChat();
+    window.open('https://t.me/khurmapro_bot', '_blank');
     setIsVisible(false);
     setIsClosed(true);
     
