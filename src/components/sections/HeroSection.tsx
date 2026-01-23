@@ -11,15 +11,20 @@ export default function HeroSection() {
     // ВСЕГДА загружаем видео из S3 при каждом обновлении страницы
     const loadVideo = async () => {
       try {
+        console.log('Загружаю видео из S3...');
         const response = await fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93');
         const data = await response.json();
+        console.log('Ответ от бэкенда:', data);
         
         if (data.success && data.videos && data.videos.length > 0) {
           const url = data.videos[0].url;
+          console.log('Видео найдено:', url);
           setVideoUrl(url);
+        } else {
+          console.log('Видео не найдено в хранилище');
         }
       } catch (err) {
-        console.error('Error loading video:', err);
+        console.error('Ошибка загрузки видео:', err);
       }
     };
     
