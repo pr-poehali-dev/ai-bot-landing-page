@@ -27,11 +27,6 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
-              <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                <Icon name="Car" size={16} />
-                <span>Для автосалонов • 24/7 • За 10 секунд</span>
-              </div>
-              
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Ваш автосалон теряет 50% лидов каждый месяц
               </h1>

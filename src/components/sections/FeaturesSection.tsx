@@ -51,27 +51,12 @@ export default function FeaturesSection() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <span className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
-                ⚡ ВОЗМОЖНОСТИ
-              </span>
               <h2 className="font-heading text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
                 Что умеет AI-консультант автосалона
               </h2>
               <p className="text-center text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed mb-6">
                 Обучен на вашем автопарке • Знает все комплектации и цены • Консультирует как опытный менеджер
               </p>
-              
-              {/* Urgency фразы */}
-              <div className="flex flex-wrap justify-center gap-4 mt-8">
-                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-full text-sm font-semibold animate-pulse">
-                  <Icon name="Clock" size={16} />
-                  Осталось 7 мест в этом месяце
-                </div>
-                <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 text-orange-700 px-4 py-2 rounded-full text-sm font-semibold">
-                  <Icon name="Flame" size={16} />
-                  Скидка 30% первым 10 салонам
-                </div>
-              </div>
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
