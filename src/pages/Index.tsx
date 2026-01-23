@@ -4,7 +4,7 @@ import HeroSection from '@/components/sections/HeroSection';
 import Icon from '@/components/ui/icon';
 import FeaturesSection from '@/components/sections/FeaturesSection';
 import ResultsSection from '@/components/sections/ResultsSection';
-
+import ScreenshotsSection from '@/components/sections/ScreenshotsSection';
 import ComparisonSection from '@/components/sections/ComparisonSection';
 import CalculatorSection from '@/components/sections/CalculatorSection';
 import PricingSection from '@/components/sections/PricingSection';
@@ -37,6 +37,8 @@ export default function Index() {
       <FeaturesSection />
       
       <ResultsSection />
+      
+      <ScreenshotsSection />
       
       <ComparisonSection />
       
