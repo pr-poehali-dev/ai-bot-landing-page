@@ -9,27 +9,9 @@ export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    // ВСЕГДА загружаем видео из S3 при каждом обновлении страницы
-    const loadVideo = async () => {
-      try {
-        console.log('Загружаю видео из S3...');
-        const response = await fetch('https://functions.poehali.dev/8dddbd14-ed51-48be-a2e0-089dfbd42d93');
-        const data = await response.json();
-        console.log('Ответ от бэкенда:', data);
-        
-        if (data.success && data.videos && data.videos.length > 0) {
-          const url = data.videos[0].url;
-          console.log('Видео найдено:', url);
-          setVideoUrl(url);
-        } else {
-          console.log('Видео не найдено в хранилище');
-        }
-      } catch (err) {
-        console.error('Ошибка загрузки видео:', err);
-      }
-    };
-    
-    loadVideo();
+    // Используем прямую ссылку на видео
+    const videoUrl = 'https://cdn.poehali.dev/projects/a342f07f-f1f9-4615-b861-611d73a35a53/bucket/d80c1f5e-5ca7-4b15-9585-066cf519c718.MOV';
+    setVideoUrl(videoUrl);
   }, []);
 
   // Автовоспроизведение при загрузке видео
