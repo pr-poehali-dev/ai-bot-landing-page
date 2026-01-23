@@ -103,31 +103,37 @@ export default function HeroSection() {
 
             <div className="order-1 md:order-2">
               <div className="flex flex-col items-center">
-                <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-2xl mb-6 group">
+                <div className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-3xl overflow-hidden shadow-2xl mb-6">
                   <video
                     ref={videoRef}
                     src="https://cdn.poehali.dev/projects/a342f07f-f1f9-4615-b861-611d73a35a53/bucket/07c10242-2663-4b84-8902-10c7e8a346f2.MOV"
                     loop
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-[center_20%]"
                     onClick={togglePlay}
                   >
                     Ваш браузер не поддерживает видео
                   </video>
                   
-                  {/* Кастомная кнопка play/pause */}
+                  {/* Кнопка play/pause - всегда видна */}
+                  {!isPlaying && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
+                      <div className="w-20 h-20 bg-white/95 rounded-full flex items-center justify-center shadow-2xl">
+                        <Icon 
+                          name="Play" 
+                          size={36} 
+                          className="text-orange-500 ml-1"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Кликабельная область */}
                   <button
                     onClick={togglePlay}
-                    className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  >
-                    <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors">
-                      <Icon 
-                        name={isPlaying ? "Pause" : "Play"} 
-                        size={32} 
-                        className="text-orange-500"
-                      />
-                    </div>
-                  </button>
+                    className="absolute inset-0 cursor-pointer"
+                    aria-label={isPlaying ? "Пауза" : "Воспроизвести видео"}
+                  />
                 </div>
                 
                 <div className="text-center">
