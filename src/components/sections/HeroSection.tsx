@@ -91,8 +91,7 @@ export default function HeroSection() {
                 <div className="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl mb-6">
                   <video
                     src="https://cdn.poehali.dev/projects/a342f07f-f1f9-4615-b861-611d73a35a53/bucket/07c10242-2663-4b84-8902-10c7e8a346f2.MOV"
-                    autoPlay
-                    muted
+                    controls
                     loop
                     playsInline
                     className="w-full h-full object-cover"
