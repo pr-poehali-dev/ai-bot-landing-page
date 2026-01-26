@@ -28,11 +28,30 @@ export default function HeroSection() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Ваш автосалон теряет 50% лидов каждый месяц
+                У вас тысячи закрытых лидов?
               </h1>
               
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-                AI-бот отвечает на Авито 24/7 за 10 секунд, собирает номера телефонов и передаёт горячие заявки менеджерам. <span className="font-semibold text-gray-900">Рост лидов на 40-50%</span> без увеличения рекламного бюджета.
+                Вернем их в продажи с помощью ИИ-чат-бота:
+              </p>
+
+              <ul className="space-y-3 mb-8 text-base md:text-lg text-gray-700">
+                <li className="flex items-start gap-3">
+                  <Icon name="Check" size={24} className="text-primary flex-shrink-0 mt-0.5" />
+                  <span>Напоминаем о новом поступлении товара</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Icon name="Check" size={24} className="text-primary flex-shrink-0 mt-0.5" />
+                  <span>Предлагаем актуальные альтернативы</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Icon name="Check" size={24} className="text-primary flex-shrink-0 mt-0.5" />
+                  <span>Передаём горячих клиентов в отдел продаж</span>
+                </li>
+              </ul>
+
+              <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed">
+                Уведомим отдел продаж через Telegram, или изменением этапа в CRM. Реактивируйте базу без лишних затрат — просто и эффективно.
               </p>
 
               <div className="flex flex-col gap-4 mb-8">
