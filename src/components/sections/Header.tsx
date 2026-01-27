@@ -4,7 +4,7 @@ import Icon from '@/components/ui/icon';
 export default function Header() {
   const menuItems = [
     { label: 'Главная', href: '#hero' },
-    { label: 'Цены', href: '#pricing' },
+    { label: 'Цена', href: '#pricing' },
     { label: 'Контакты', href: '#footer' },
   ];
 
