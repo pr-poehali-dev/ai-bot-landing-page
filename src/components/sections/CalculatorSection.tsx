@@ -8,12 +8,19 @@ interface CalculatorSectionProps {
   chatsPerMonth: number;
   setChatsPerMonth: (value: number) => void;
   stats: {
-    currentLeads: number;
-    newLeads: number;
+    leadsWithoutBot: number;
+    salesWithoutBot: number;
+    profitWithoutBot: number;
+    profitYearWithoutBot: number;
+    leadsWithBot: number;
+    salesWithBot: number;
+    profitWithBot: number;
+    profitYearWithBot: number;
     additionalLeads: number;
-    sales: number;
-    profit: number;
-    profitYear: number;
+    additionalSales: number;
+    additionalProfit: number;
+    additionalProfitYear: number;
+    profitGrowthPercent: number;
   };
 }
 
@@ -50,22 +57,63 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
               </div>
             </div>
 
-            <div className="mt-8 space-y-4">
-              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                <span className="font-medium">Дополнительно заявок</span>
-                <span className="text-2xl font-bold text-primary">+{stats.additionalLeads}</span>
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-center mb-3">БЕЗ AI-бота</h3>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <p className="text-sm text-muted-foreground mb-1">Лидов в месяц</p>
+                  <p className="text-3xl font-bold text-red-600">{stats.leadsWithoutBot}</p>
+                </div>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <p className="text-sm text-muted-foreground mb-1">Продаж в месяц</p>
+                  <p className="text-3xl font-bold text-red-600">{stats.salesWithoutBot}</p>
+                </div>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <p className="text-sm text-muted-foreground mb-1">Прибыль в месяц</p>
+                  <p className="text-2xl font-bold text-red-600">{stats.profitWithoutBot.toLocaleString()} ₽</p>
+                </div>
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <p className="text-sm text-muted-foreground mb-1">Прибыль в год</p>
+                  <p className="text-2xl font-bold text-red-600">{stats.profitYearWithoutBot.toLocaleString()} ₽</p>
+                </div>
               </div>
-              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                <span className="font-medium">Продано машин (конверсия 15%)</span>
-                <span className="text-2xl font-bold text-primary">+{stats.sales} авто</span>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-center mb-3">С AI-ботом</h3>
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-sm text-muted-foreground mb-1">Лидов в месяц</p>
+                  <p className="text-3xl font-bold text-green-600">{stats.leadsWithBot}</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-sm text-muted-foreground mb-1">Продаж в месяц</p>
+                  <p className="text-3xl font-bold text-green-600">{stats.salesWithBot}</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-sm text-muted-foreground mb-1">Прибыль в месяц</p>
+                  <p className="text-2xl font-bold text-green-600">{stats.profitWithBot.toLocaleString()} ₽</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-sm text-muted-foreground mb-1">Прибыль в год</p>
+                  <p className="text-2xl font-bold text-green-600">{stats.profitYearWithBot.toLocaleString()} ₽</p>
+                </div>
               </div>
-              <div className="flex items-center justify-between p-6 bg-primary text-white rounded-lg">
-                <span className="font-bold text-sm md:text-base">Дополнительная прибыль в месяц</span>
-                <span className="text-xl md:text-2xl font-bold">{stats.profit.toLocaleString()} ₽</span>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-primary to-orange-500 p-6 rounded-lg text-white text-center">
+                <p className="text-sm mb-2">🚀 Рост прибыли</p>
+                <p className="text-5xl font-bold mb-1">+{stats.profitGrowthPercent}%</p>
+                <p className="text-sm opacity-90">или +{stats.additionalProfit.toLocaleString()} ₽/мес</p>
               </div>
-              <div className="flex items-center justify-between p-6 bg-green-600 text-white rounded-lg">
-                <span className="font-bold text-sm md:text-base">Дополнительная прибыль в год</span>
-                <span className="text-xl md:text-2xl font-bold">{stats.profitYear.toLocaleString()} ₽</span>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-slate-50 p-4 rounded-lg text-center">
+                  <p className="text-sm text-muted-foreground mb-1">+Лидов</p>
+                  <p className="text-2xl font-bold text-primary">{stats.additionalLeads}</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-lg text-center">
+                  <p className="text-sm text-muted-foreground mb-1">+Продаж</p>
+                  <p className="text-2xl font-bold text-primary">{stats.additionalSales}</p>
+                </div>
               </div>
             </div>
           </Card>
@@ -95,7 +143,7 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
       <CalculatorModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        profit={stats.profit}
+        profit={stats.additionalProfit}
       />
     </section>
   );

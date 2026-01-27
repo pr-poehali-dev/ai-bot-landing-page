@@ -16,17 +16,41 @@ export default function Index() {
   const [chatsPerMonth, setChatsPerMonth] = useState(180);
 
   const calculateProfit = () => {
-    const additionalLeads = Math.round(chatsPerMonth * 0.15);
-    const sales = Math.round(additionalLeads * 0.15);
-    const profit = sales * 50000;
-    const profitYear = profit * 12;
+    // Без бота
+    const leadsWithoutBot = Math.round(chatsPerMonth * 0.25);
+    const salesWithoutBot = Math.round(leadsWithoutBot * 0.15);
+    const profitWithoutBot = salesWithoutBot * 50000;
+    const profitYearWithoutBot = profitWithoutBot * 12;
+
+    // С ботом
+    const leadsWithBot = Math.round(chatsPerMonth * 0.40);
+    const salesWithBot = Math.round(leadsWithBot * 0.15);
+    const profitWithBot = salesWithBot * 50000;
+    const profitYearWithBot = profitWithBot * 12;
+
+    // Прирост
+    const additionalLeads = leadsWithBot - leadsWithoutBot;
+    const additionalSales = salesWithBot - salesWithoutBot;
+    const additionalProfit = profitWithBot - profitWithoutBot;
+    const additionalProfitYear = profitYearWithBot - profitYearWithoutBot;
+
+    // Рост в процентах
+    const profitGrowthPercent = Math.round(((profitWithBot - profitWithoutBot) / profitWithoutBot) * 100);
+
     return { 
-      currentLeads: 0,
-      newLeads: 0,
+      leadsWithoutBot,
+      salesWithoutBot,
+      profitWithoutBot,
+      profitYearWithoutBot,
+      leadsWithBot,
+      salesWithBot,
+      profitWithBot,
+      profitYearWithBot,
       additionalLeads, 
-      sales, 
-      profit,
-      profitYear
+      additionalSales, 
+      additionalProfit,
+      additionalProfitYear,
+      profitGrowthPercent
     };
   };
 
