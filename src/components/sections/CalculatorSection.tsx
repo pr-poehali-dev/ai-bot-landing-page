@@ -13,6 +13,7 @@ interface CalculatorSectionProps {
     additionalLeads: number;
     sales: number;
     profit: number;
+    profitYear: number;
   };
 }
 
@@ -49,24 +50,6 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <div className="bg-red-50 p-6 rounded-lg border border-red-200">
-                  <p className="text-sm text-muted-foreground mb-2">БЕЗ AI-бота</p>
-                  <p className="text-4xl font-bold text-red-600">{stats.currentLeads}</p>
-                  <p className="text-sm text-muted-foreground mt-1">лидов в месяц</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-                  <p className="text-sm text-muted-foreground mb-2">С AI-ботом</p>
-                  <p className="text-4xl font-bold text-green-600">{stats.newLeads}</p>
-                  <p className="text-sm text-muted-foreground mt-1">лидов в месяц</p>
-                </div>
-              </div>
-            </div>
-
             <div className="mt-8 space-y-4">
               <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                 <span className="font-medium">Дополнительно заявок</span>
@@ -77,8 +60,12 @@ export default function CalculatorSection({ chatsPerMonth, setChatsPerMonth, sta
                 <span className="text-2xl font-bold text-primary">+{stats.sales} авто</span>
               </div>
               <div className="flex items-center justify-between p-6 bg-primary text-white rounded-lg">
-                <span className="font-bold text-sm md:text-base">Дополнительная прибыль</span>
-                <span className="text-xl md:text-2xl font-bold">{stats.profit.toLocaleString()} ₽/мес</span>
+                <span className="font-bold text-sm md:text-base">Дополнительная прибыль в месяц</span>
+                <span className="text-xl md:text-2xl font-bold">{stats.profit.toLocaleString()} ₽</span>
+              </div>
+              <div className="flex items-center justify-between p-6 bg-green-600 text-white rounded-lg">
+                <span className="font-bold text-sm md:text-base">Дополнительная прибыль в год</span>
+                <span className="text-xl md:text-2xl font-bold">{stats.profitYear.toLocaleString()} ₽</span>
               </div>
             </div>
           </Card>
