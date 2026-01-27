@@ -28,7 +28,7 @@ export default function HeroSection() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1">
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                У вас тысячи закрытых лидов?
+                Получайте продажи автомобилей из ваших закрытых лидов
               </h1>
               
               <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
